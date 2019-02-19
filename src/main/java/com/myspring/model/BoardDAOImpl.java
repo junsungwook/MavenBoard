@@ -34,16 +34,14 @@ public class BoardDAOImpl implements BoardDAO{
 	//수정
 	@Override
 	public void update(String sqlid, BoardDTO board) {
-		System.out.println(board.getWriter());
 		sqlMap.update(sqlid, board);
 		
 	}
 	
 	//삭제
 	@Override
-	public void delete(String sqlid, String id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(String sqlid, int seq) {
+		sqlMap.delete(sqlid, seq);
 	}
 	
 	//상세보기
@@ -51,23 +49,6 @@ public class BoardDAOImpl implements BoardDAO{
 	public BoardDTO view(String sqlid, int seq) {
 		BoardDTO board = sqlMap.selectOne(sqlid, seq);
 		return board;
-	}
-
-	//비번체크
-	@Override
-	public boolean passCheck(String sqlid, int seq, String password) {
-		System.out.println(seq+"33");
-		boolean result = false;
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		hm.put("seq", seq);
-		hm.put("password", password);
-		int count = sqlMap.selectOne("passCheck", hm);
-		System.out.println(count+"카운트");
-		if(count==1) {
-			result = true;
-			System.out.println(result+"result다");
-		}
-		return result;
 	}
 
 	//글카운팅
@@ -78,6 +59,12 @@ public class BoardDAOImpl implements BoardDAO{
 		hm.put("word", word);
 		int cnt = sqlMap.selectOne(sqlid, hm);
 		return cnt;
+	}
+
+	@Override
+	public boolean passCheck(String sqlid, int seq, String pass) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

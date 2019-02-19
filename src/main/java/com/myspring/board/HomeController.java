@@ -61,12 +61,25 @@ public class HomeController {
 		return "detailView";
 	}
 	@RequestMapping("update")
-	public String update(BoardDTO board) {
-		System.out.println(board.getSeq()+"11");
-		mService.update(board);
+	public String update(BoardDTO board,String password2) {
+		if(board.getPassword().equals(password2)) {
+			mService.update(board);
+		}
+		else {
+			
+		}
 		return "home";
 	}
-	
+	@RequestMapping("delete")
+	public String delete(BoardDTO board,String password2) {
+		if(board.getPassword().equals(password2)) {
+			mService.delete(board);
+		}
+		else {
+			
+		}
+		return "home";
+	}
 	
 	
 	@RequestMapping("list")

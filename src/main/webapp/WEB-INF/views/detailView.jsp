@@ -7,6 +7,13 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>여기에 제목을 입력하십시오</title>
+<script> 
+function info_chk2(frm) { 
+ frm.action='delete'; 
+ frm.submit(); 
+ return true; 
+} 
+</script> 
 </head>
 <body>
 ${board.password }
@@ -16,8 +23,8 @@ ${board.password }
 				<tr>	
 					<td>글번호</td><td>${board.seq }</td><td>작성자</td><td>${board.writer }</td>
 					<input type="hidden" value="${board.seq }" name="seq" id="seq">
-					<input type="hidden" value="${board.password }" name="password" id="password">
 					<input type="hidden" value="${board.writer }" name="writer" id="writer">
+					<input type="hidden" value="${board.password }" name="password" id="password">
 				</tr>
 				<tr>
 					<td>작성날짜</td><td>${board.regdate }</td><td>조회수</td><td>${board.hitcount }</td>
@@ -33,11 +40,12 @@ ${board.password }
 				</tr>
 				<tr>
 					<input type="submit" value="글수정" class="btn btn-default">&nbsp;
-					<input type="button" value="글삭제" class="btn btn-default" onclick="location='delete?seq=${board.seq }'">&nbsp;
+					<input type="button" value="글삭제" class="btn btn-default" onclick="return info_chk2(this.form);">&nbsp;
 					<input type="button" value="글목록" class="btn btn-default" onclick="location='list'">&nbsp;
 					<input type="button" value="답글쓰기" class="btn btn-default" onclick="location='boardRe?BOARD_NUM=${board.seq }&BOARD_RE_REF=${board.groups }&BOARD_RE_SEQ=${board.steps }&BOARD_RE_LEV=${board.levels }'">
 				</tr>
 			</table>
+			비번쳐라<input type="password" name="password2" id="password2">
 		</form>
 	</div>	
 </body>

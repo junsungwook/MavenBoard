@@ -70,18 +70,18 @@ function getData(pageNum){
 			</c:if>
 			<br><br><br>
 			</div>
-			<form name="search" action="boardList.bo">
+			<form action="list">
 				<div class="col-xs-2" id="sele">
 				   <select id="field" class="form-control" name="field">
-				      <option value="BOARD_SUBJECT"> 제목
-				      <option value="BOARD_NAME"> 작성자
+				      <option value="title"> 제목
+				      <option value="writer"> 작성자
 				   </select>
 				</div>
 				<div class="col-xs-3">
 				   <input type='text' id='word' name='word' size='10' class="form-control" placeholder="검색어입력">
 				</div>
 				   <input type='submit' class="btn btn-default" value="검색">
-				   <input type="button" class="btn btn-default" onclick="location='writeForm.jsp'" value="글쓰기">
+				   <input type="button" class="btn btn-default" onclick="location='write'" value="글쓰기">
 			</form>
 		</div>
 	</body>

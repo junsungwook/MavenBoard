@@ -31,16 +31,10 @@ public class BoardService {
 	}
 	
 	public void update(BoardDTO board) {
-		System.out.println(board.getSeq()+"22");
+		mDao.update("update", board);
+	}
+	public void delete(BoardDTO board) {
 		int seq = board.getSeq();
-		String password = board.getPassword();
-		boolean result = mDao.passCheck("check", seq, password);
-		if(result) {
-			mDao.update("update", board);
-			System.out.println(board.getPassword());
-		}
-		else {
-			
-		}
+		mDao.delete("delete", seq);
 	}
 }

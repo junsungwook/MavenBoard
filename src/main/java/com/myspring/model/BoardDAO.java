@@ -13,7 +13,7 @@ public interface BoardDAO {
 	//수정
 	void update(String sqlid,BoardDTO board);
 	//삭제
-	void delete(String sqlid,String id);
+	void delete(String sqlid,int seq);
 	//상세보기
 	BoardDTO view(String sqlid,int seq);
 	//패스워드체크
