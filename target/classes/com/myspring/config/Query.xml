@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!-- 쿼리를 적으면 된다 -->
+<mapper namespace="com.myspring.config.Query">
+
+	<insert id="boardInsert" parameterType="dto">
+		insert into 
+		springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
+		values(board_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},0,0,0)
+	</insert>
+	
+	<select id="boardCount" parameterType="HashMap" resultType="Integer">
+		<if test="field==null">
+		select count(*)
+		from springboard
+		</if>
+		<if test="field!=null">
+		select count(*)
+		from springboard
+		where ${field } like '%${word}%'
+		</if>
+	</select>
+
+	<select id="boardList" parameterType="HashMap" resultType="dto">
+		<if test="field==null">
+			select * 
+			from (select rownum rn,aa.* 
+				  from (select * from springboard)aa) 
+			where rn between #{startRow} and #{endRow}
+			</if>
+			<if test="field!=null">
+			select *
+			from (
+				select * 
+				from (
+				      select rownum rn,aa.* 
+				  	  from (select * from springboard)aa
+				  	  ) 
+				where ${field } like '%${word}%'
+				)
+		</if>
+	</select>
+	
+	<select id="detailView" parameterType="Integer" resultType="dto">
+		select *
+		from springboard
+		where seq = #{seq}
+	</select>
+
+
+
+
+</mapper>
