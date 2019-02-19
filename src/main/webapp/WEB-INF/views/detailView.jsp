@@ -9,12 +9,15 @@
 <title>여기에 제목을 입력하십시오</title>
 </head>
 <body>
+${board.password }
 	<div class="container">
-		<form action="update" method="get">
+		<form action="update" method="post">
 			<table class="table table-striped">
 				<tr>	
 					<td>글번호</td><td>${board.seq }</td><td>작성자</td><td>${board.writer }</td>
 					<input type="hidden" value="${board.seq }" name="seq" id="seq">
+					<input type="hidden" value="${board.password }" name="password" id="password">
+					<input type="hidden" value="${board.writer }" name="writer" id="writer">
 				</tr>
 				<tr>
 					<td>작성날짜</td><td>${board.regdate }</td><td>조회수</td><td>${board.hitcount }</td>

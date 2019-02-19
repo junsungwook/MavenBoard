@@ -49,7 +49,18 @@
 		from springboard
 		where seq = #{seq}
 	</select>
-
+	
+	<update id="update" parameterType="dto">
+		update springboard
+		set writer=#{writer},title=#{title},content=#{content}
+		where seq=#{seq}
+	</update>
+	
+	<select id="passCheck" parameterType="HashMap"  resultType="Integer">
+		select count(*)
+		from springboard
+		where seq=#{seq} and password=#{password}
+	</select>
 
 
 

@@ -52,7 +52,7 @@ public class HomeController {
 	@RequestMapping(value="write",method=RequestMethod.POST)
 	public String insert(BoardDTO board) {
 		mService.write(board);
-		return "listView";
+		return "home";
 	}
 	@RequestMapping("view")
 	public String view(int seq,Model model) {
@@ -61,15 +61,14 @@ public class HomeController {
 		return "detailView";
 	}
 	@RequestMapping("update")
-	public String update(BoardDTO board,Model model) {
-		model.addAttribute("board",board);
-		return "update";
+	public String update(BoardDTO board) {
+		System.out.println(board.getSeq()+"11");
+		mService.update(board);
+		return "home";
 	}
-	@RequestMapping("passCheck")
-	public String passCheck(BoardDTO board,Model model) {
-		int num = mService.check(board);
-		return "list";
-	}
+	
+	
+	
 	@RequestMapping("list")
 	public String listView(HttpServletRequest request,Model model) {
 		String pageNum = request.getParameter("pageNum")==null?"1":request.getParameter("pageNum");

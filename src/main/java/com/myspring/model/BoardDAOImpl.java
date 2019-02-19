@@ -34,7 +34,8 @@ public class BoardDAOImpl implements BoardDAO{
 	//수정
 	@Override
 	public void update(String sqlid, BoardDTO board) {
-		// TODO Auto-generated method stub
+		System.out.println(board.getWriter());
+		sqlMap.update(sqlid, board);
 		
 	}
 	
@@ -54,9 +55,19 @@ public class BoardDAOImpl implements BoardDAO{
 
 	//비번체크
 	@Override
-	public int passCheck(String sqlid, int seq, String pass) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean passCheck(String sqlid, int seq, String password) {
+		System.out.println(seq+"33");
+		boolean result = false;
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("seq", seq);
+		hm.put("password", password);
+		int count = sqlMap.selectOne("passCheck", hm);
+		System.out.println(count+"카운트");
+		if(count==1) {
+			result = true;
+			System.out.println(result+"result다");
+		}
+		return result;
 	}
 
 	//글카운팅

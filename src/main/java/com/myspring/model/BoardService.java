@@ -30,10 +30,17 @@ public class BoardService {
 		return board;
 	}
 	
-	public int check(BoardDTO board) {
+	public void update(BoardDTO board) {
+		System.out.println(board.getSeq()+"22");
 		int seq = board.getSeq();
-		String pass = board.getPassword();
-		int num = mDao.passCheck("check", seq, pass);
-		return num;
+		String password = board.getPassword();
+		boolean result = mDao.passCheck("check", seq, password);
+		if(result) {
+			mDao.update("update", board);
+			System.out.println(board.getPassword());
+		}
+		else {
+			
+		}
 	}
 }

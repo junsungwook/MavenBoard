@@ -17,7 +17,7 @@ public interface BoardDAO {
 	//상세보기
 	BoardDTO view(String sqlid,int seq);
 	//패스워드체크
-	int passCheck(String sqlid,int seq, String pass);
+	boolean passCheck(String sqlid,int seq, String pass);
 	//게시글 수 
 	int boardCount(String sqlid,String field, String word);
 	

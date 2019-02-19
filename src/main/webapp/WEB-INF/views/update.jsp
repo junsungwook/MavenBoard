@@ -12,8 +12,9 @@
 		<input type="hidden" value="${board.seq }" name="seq" id="seq">
 		<input type="hidden" value="${board.title }" name="title" id="title">
 		<input type="hidden" value="${board.content }" name="content" id="content">
+		<input type="hidden" value="${board.password }" name="password" id="password">
 		비밀번호를 입력하세요<br>
-		<input type="password" name="password" id="password"><br>
+		<input type="password" name="password2" id="password2"><br>
 		<input type="submit" value="확인">
 		<input type="button" value="뒤로" onclick="self.close()">
 	</form>
