@@ -9,7 +9,14 @@
 	<insert id="boardInsert" parameterType="dto">
 		insert into 
 		springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
-		values(board_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},0,0,0)
+		values(board_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},board_seq.nextval,0,0)
+	</insert>
+	
+	
+	<insert id="replyInsert" parameterType="dto">
+		insert into 
+		springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
+		values(board_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},#{groups},#{levels}+1,#{steps}+1)
 	</insert>
 	
 	<select id="boardCount" parameterType="HashMap" resultType="Integer">
@@ -28,7 +35,7 @@
 		<if test="field==null">
 			select * 
 			from (select rownum rn,aa.* 
-				  from (select * from springboard)aa) 
+				  from (select * from springboard order by groups desc,steps asc)aa) 
 			where rn between #{startRow} and #{endRow}
 			</if>
 			<if test="field!=null">
@@ -37,7 +44,7 @@
 				select * 
 				from (
 				      select rownum rn,aa.* 
-				  	  from (select * from springboard)aa
+				  	  from (select * from springboard order by groups desc,steps asc)aa
 				  	  ) 
 				where ${field } like '%${word}%'
 				)
@@ -55,10 +62,28 @@
 		set title=#{title},content=#{content}
 		where seq=#{seq}
 	</update>
+	
+	<update id="upup" parameterType="Integer">
+		update springboard
+		set hitcount=hitcount+1
+		where seq=#{seq}
+	</update>
+	
 
 	<delete id="delete" parameterType="Integer">
 		delete from springboard
 		where seq=#{seq}
 	</delete>
+	
+	<select id="commentList" parameterType="Integer" resultType="cto">
+		select *
+		from commentboard
+		where bnum=#{seq}
+	</select>
+	<insert id="commentInsert" parameterType="cto">
+		insert into 
+		commentboard(cnum,writer,regdate,msg,bnum) 
+		values(cnum_seq.nextval,#{writer},sysdate,#{msg},#{bnum})
+	</insert>
 
 </mapper>

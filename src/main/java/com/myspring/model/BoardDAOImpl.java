@@ -1,5 +1,6 @@
 package com.myspring.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,6 +68,22 @@ public class BoardDAOImpl implements BoardDAO{
 		return false;
 	}
 
+	//조회수 증가
+	public void countUp(String sqlid, int seq) {
+		sqlMap.update(sqlid, seq);
+	}
 
+	public void reInsert(String sqlid, BoardDTO board) {
+		sqlMap.insert(sqlid, board);
+	}
+	
+	public List<CommentDTO> commentList(String sqlid, int seq) {
+		List<CommentDTO> arr = sqlMap.selectList(sqlid, seq);
+		return arr;
+	}
+	
+	public void coInsert(String sqlid, CommentDTO cd) {
+		sqlMap.insert(sqlid, cd);
+	}
 
 }

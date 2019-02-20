@@ -38,8 +38,8 @@ function getData(pageNum){
 							<td>${list.writer }</td>
 							<c:if test="${list.levels gt 0 }">
 								<td><a href="#" onclick="location.href='view?seq=${list.seq}'">
-								<img src="../images/level.gif" width="${list.levels*10 }" height="16">
-	             				<img src="../images/re.gif">${list.title }</a></td>
+								<img src="resources/level.gif" width="${list.levels*10 }" height="16">
+	             				<img src="resources/re.gif">${list.title }</a></td>
 							</c:if>
 							<c:if test="${list.levels eq 0 }">
 								<td><a href="#" onclick="location.href='view?seq=${list.seq}'">${list.title }</a></td>

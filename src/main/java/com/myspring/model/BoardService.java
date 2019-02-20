@@ -1,5 +1,6 @@
 package com.myspring.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ public class BoardService {
 	}
 	
 	public BoardDTO view(int seq) {
+		mDao.countUp("upup", seq);
 		BoardDTO board = mDao.view("detailView", seq);
 		return board;
 	}
@@ -36,5 +38,15 @@ public class BoardService {
 	public void delete(BoardDTO board) {
 		int seq = board.getSeq();
 		mDao.delete("delete", seq);
+	}
+	public void replyWrite(BoardDTO board) {
+		mDao.reInsert("replyInsert", board);
+	}
+	public List<CommentDTO> commentList(int seq) {
+		List<CommentDTO> arr = mDao.commentList("commentList", seq);
+		return arr;
+	}
+	public void commentInsert(CommentDTO cd) {
+		mDao.coInsert("commentInsert", cd);
 	}
 }

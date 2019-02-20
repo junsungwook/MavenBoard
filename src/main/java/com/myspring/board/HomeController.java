@@ -1,6 +1,7 @@
 package com.myspring.board;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -8,15 +9,21 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myspring.model.BoardDTO;
 import com.myspring.model.BoardService;
+import com.myspring.model.CommentDTO;
 
 /**
  * Handles requests for the application home page.
@@ -54,6 +61,19 @@ public class HomeController {
 		mService.write(board);
 		return "home";
 	}
+	
+	@GetMapping("reply")
+	public String reply(int groups, int levels, int steps,Model model) {
+		model.addAttribute("groups",groups);
+		model.addAttribute("levels",levels);
+		model.addAttribute("steps",steps);
+		return "replyWrite";
+	}
+	@PostMapping("reply")
+	public String replys(BoardDTO board) {
+		mService.replyWrite(board);
+		return "home";
+	}
 	@RequestMapping("view")
 	public String view(int seq,Model model) {
 		BoardDTO board = mService.view(seq);
@@ -79,6 +99,33 @@ public class HomeController {
 			
 		}
 		return "home";
+	}
+	//produce 부분을 써야 json형태로 들어간 데이터가 한글화된다. 필터로는 적용이 안됨
+	@RequestMapping(value="C_List",produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String C_List(int seq) {
+		List<CommentDTO> arr = mService.commentList(seq);
+		JSONArray jarr = new JSONArray();
+		for(CommentDTO cb : arr){
+			JSONObject obj = new JSONObject();
+			obj.put("bnum",cb.getBnum());
+			obj.put("cnum",cb.getCnum());
+			obj.put("msg",cb.getMsg());
+			obj.put("writer",cb.getWriter());
+			obj.put("regdate",cb.getRegdate());
+			jarr.add(obj);
+		}
+		return jarr.toString();
+	}
+	
+	@PostMapping("C_Insert")
+	public String C_Insert(String msg, int seq, String writer) {
+		CommentDTO cd = new CommentDTO();
+		cd.setWriter(writer);
+		cd.setBnum(seq);
+		cd.setMsg(msg);
+		mService.commentInsert(cd);
+		return "redirect:C_List?seq="+seq;
 	}
 	
 	

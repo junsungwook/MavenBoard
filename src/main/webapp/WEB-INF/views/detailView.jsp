@@ -13,6 +13,59 @@ function info_chk2(frm) {
  frm.submit(); 
  return true; 
 } 
+$(document).ready(function(){
+	$.ajax({
+		url:"C_List",
+		type:"get",
+		data:{"seq":"${board.seq }"},
+		success:function(data){
+			if(data!=null){
+				data = $.parseJSON(data);
+				var htmlStr="";
+				htmlStr +="<table class='table table-striped table-dark'>";
+				for(var i=0; i<data.length;i++){
+					htmlStr +="<tr>";
+					htmlStr +="<td>"+data[i].cnum+"</td>";
+					htmlStr +="<td>"+data[i].writer+"</td>";
+					htmlStr +="<td>"+data[i].regdate+"</td>";
+					htmlStr +="<td>"+data[i].msg+"</td>";
+					htmlStr +="</tr>";
+				}
+				htmlStr +="</table>";
+				$("#result").html(htmlStr);	
+			}
+		},
+		error:function(e){
+			alert("error : "+ e);
+		}
+	});
+	$("#commentBtn").click(function(){
+		$.ajax({
+			url:"C_Insert",
+			type:"post",
+			data:{"msg":$("#msg").val(),"seq":"${board.seq }","writer":$("#cwriter").val()},
+			success:function(data){
+				data = $.parseJSON(data);
+				var htmlStr="";
+				htmlStr +="<table class='table table-striped table-dark'>";
+				for(var i=0; i<data.length;i++){
+					htmlStr +="<tr>";
+					htmlStr +="<td>"+data[i].cnum+"</td>";
+					htmlStr +="<td>"+data[i].writer+"</td>";
+					htmlStr +="<td>"+data[i].regdate+"</td>";
+					htmlStr +="<td>"+data[i].msg+"</td>";
+					htmlStr +="</tr>";
+				}
+				htmlStr +="</table>";
+				$("#result").html(htmlStr);	
+				$("#msg").val("");
+			},
+			error:function(e){
+				alert("inserterror : "+ e);
+			}
+		});
+	});
+});
 </script> 
 </head>
 <body>
@@ -42,11 +95,17 @@ ${board.password }
 					<input type="submit" value="글수정" class="btn btn-default">&nbsp;
 					<input type="button" value="글삭제" class="btn btn-default" onclick="return info_chk2(this.form);">&nbsp;
 					<input type="button" value="글목록" class="btn btn-default" onclick="location='list'">&nbsp;
-					<input type="button" value="답글쓰기" class="btn btn-default" onclick="location='boardRe?BOARD_NUM=${board.seq }&BOARD_RE_REF=${board.groups }&BOARD_RE_SEQ=${board.steps }&BOARD_RE_LEV=${board.levels }'">
+					<input type="button" value="답글쓰기" class="btn btn-default" onclick="location='reply?groups=${board.groups }&levels=${board.levels }&steps=${board.steps }'">
 				</tr>
 			</table>
 			비번쳐라<input type="password" name="password2" id="password2">
 		</form>
+		<div id="result"></div>
+		<div align="right">
+			아이디 입력 <input type="text" value="" name="writer" id="cwriter">
+			<textarea rows="5" cols="50" id="msg" class="form-control"></textarea>
+			<input type="button" class="btn btn-default" value="댓글쓰기" id="commentBtn" class="btn btn-default">
+		</div>
 	</div>	
 </body>
 </html>
