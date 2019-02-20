@@ -41,6 +41,7 @@ public class BoardService {
 	}
 	public void replyWrite(BoardDTO board) {
 		mDao.reInsert("replyInsert", board);
+		mDao.steps("maxStep", board);
 	}
 	public List<CommentDTO> commentList(int seq) {
 		List<CommentDTO> arr = mDao.commentList("commentList", seq);

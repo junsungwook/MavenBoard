@@ -76,7 +76,9 @@ public class BoardDAOImpl implements BoardDAO{
 	public void reInsert(String sqlid, BoardDTO board) {
 		sqlMap.insert(sqlid, board);
 	}
-	
+	public void steps(String sqlid, BoardDTO board) {
+		sqlMap.update(sqlid, board);
+	}
 	public List<CommentDTO> commentList(String sqlid, int seq) {
 		List<CommentDTO> arr = sqlMap.selectList(sqlid, seq);
 		return arr;
